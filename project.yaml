@@ -1,0 +1,37 @@
+name: rl-monitor-ood
+title: "No CoT-Monitorability Decay to Localize: Domain-Specific RL Leaves the Answer's CoT-Dependence Intact In-Domain and Out-of-Domain"
+question: >
+  A safety worry about reinforcement learning is that it degrades chain-of-thought
+  monitorability, making the written reasoning a less faithful guide to the answer.
+  If domain-specific RL causes such decay, is the decay local to the trained domain
+  or does it generalize out of domain? We measure a monitorability proxy, the
+  self-CoT mismatch corruption flip rate (how often the answer changes when the
+  model's own CoT is swapped for another's; higher means the answer depends on the
+  CoT and is more monitorable), for Qwen2.5-1.5B-Instruct before and after
+  outcome-only GRPO trained on MMLU, on MMLU (in-domain) and ARC-Challenge
+  (out-of-domain), paired on the items both models retain.
+stage: write
+status: >
+  Real run complete (RTX 5090, reusing the MMLU-trained base and RL checkpoints
+  from rl-selfcot-causal). There is no monitorability decay to localize. In-domain
+  the mismatch flip rate is identical (base 0.6667, RL 0.6667, n=96); out-of-domain
+  it is statistically unchanged and if anything higher (base 0.5570, RL 0.6329, n=158,
+  overlapping CIs), so the decay is zero in-domain and negative (no decay) OOD. Both
+  models remain strongly CoT-dependent (mismatch flip far above the intact control in
+  both domains). The GRPO treatment barely changed the model (accuracy flat:
+  MMLU 0.292/0.292, ARC 0.772/0.760), which is why there is no decay; this is a
+  bounded null, not a refutation of RL-induced monitorability loss at scale.
+tags:
+  - cot-faithfulness
+  - cot-monitorability
+  - reinforcement-learning
+  - out-of-domain-generalization
+  - ai-safety
+  - null-result
+collaborators:
+  - "Ephraiem Sarabamoun"
+links:
+  code_local: "~/projects/rl-monitor-ood"
+  sibling_study: "~/projects/rl-selfcot-causal"
+  compute: "RTX 5090, torch 2.12 cu130; Qwen2.5-1.5B-Instruct base + MMLU-trained outcome-only GRPO; MMLU + ARC-Challenge"
+references_bib: references.bib

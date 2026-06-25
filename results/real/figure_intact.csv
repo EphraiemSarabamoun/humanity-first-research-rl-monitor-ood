@@ -1,0 +1,5 @@
+metric,value,n
+base_mmlu_intact_flip,0.208333,96
+rl_mmlu_intact_flip,0.156250,96
+base_arc_intact_flip,0.056962,158
+rl_arc_intact_flip,0.044304,158

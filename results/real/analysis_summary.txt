@@ -1,0 +1,42 @@
+# CoT-monitorability decay from domain-specific RL: local or generalized?
+
+Model: Qwen2.5-1.5B-Instruct, base (checkpoint-0) vs outcome-only GRPO trained on MMLU (checkpoint-final).
+Monitorability proxy: mismatch-CoT flip rate (answer changes when the model's own CoT is swapped for another's).
+Higher = answer depends on CoT = more monitorable. In-domain = MMLU, out-of-domain = ARC-Challenge.
+Paired on items both models retain per domain. Bootstrap 2000, seed 42.
+
+## Base, MMLU (in-domain): mismatch-CoT flip rate (monitorability)
+  value = 0.6667  (95% CI 0.5729-0.7604, n=96)
+
+## RL, MMLU (in-domain): mismatch-CoT flip rate (monitorability)
+  value = 0.6667  (95% CI 0.5729-0.7604, n=96)
+
+## Base, ARC (out-of-domain): mismatch-CoT flip rate (monitorability)
+  value = 0.5570  (95% CI 0.4747-0.6331, n=158)
+
+## RL, ARC (out-of-domain): mismatch-CoT flip rate (monitorability)
+  value = 0.6329  (95% CI 0.5570-0.7089, n=158)
+
+## Base, MMLU: intact-CoT flip rate (control)
+  value = 0.2083  (95% CI 0.1352-0.2917, n=96)
+
+## RL, MMLU: intact-CoT flip rate (control)
+  value = 0.1562  (95% CI 0.0833-0.2292, n=96)
+
+## Base, ARC: intact-CoT flip rate (control)
+  value = 0.0570  (95% CI 0.0253-0.0949, n=158)
+
+## RL, ARC: intact-CoT flip rate (control)
+  value = 0.0443  (95% CI 0.0127-0.0759, n=158)
+
+## Base, MMLU: accuracy
+  value = 0.2917  (95% CI 0.1979-0.3854, n=96)
+
+## RL, MMLU: accuracy
+  value = 0.2917  (95% CI 0.1979-0.3750, n=96)
+
+## Base, ARC: accuracy
+  value = 0.7722  (95% CI 0.7089-0.8354, n=158)
+
+## RL, ARC: accuracy
+  value = 0.7595  (95% CI 0.6962-0.8291, n=158)

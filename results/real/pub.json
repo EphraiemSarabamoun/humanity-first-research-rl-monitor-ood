@@ -1,0 +1,208 @@
+{
+ "plain": "A safety worry is that training an AI with reinforcement learning makes its written reasoning a worse guide to its real answer, so that reading the reasoning no longer catches problems. If RL on one subject causes that, does the damage stay in that subject or spread to others? We trained a small model with RL on one multiple-choice subject area and measured, on both that area and a different one, how much the answer still depends on the written reasoning (we scramble the reasoning and see if the answer changes). We found no meaningful change either way: in the trained area the dependence was statistically unchanged, and in the new area it was unchanged or slightly higher, not lower. So there was no decay to be local or to spread. The catch is the RL run was weak and barely changed the model, so this does not settle the question for strong RL. Approve publishes it as an honest negative and methods result; Reject shelves it.",
+ "cost": {
+  "api_equivalent_usd": 122.1668,
+  "sessions": [
+   {
+    "label": "research-prime-driver",
+    "host": "local",
+    "transcript": "/tmp/monitor-driver.jsonl",
+    "messages": 459,
+    "usd": 122.1668
+   }
+  ]
+ },
+ "paper_title": "No Significant CoT-Monitorability Decay to Localize: Domain-Specific RL Shows No Significant Change in CoT-Dependence In-Domain or Out-of-Domain",
+ "headline_claim": "On Qwen2.5-1.5B-Instruct after outcome-only GRPO trained on MMLU, the self-CoT mismatch-flip monitorability proxy showed no significant base-vs-RL change in either domain by paired tests: MMLU net rate identical at 0.6667 (McNemar p=0.87, paired decay CI -0.125 to 0.125), ARC 0.557 to 0.633 (McNemar p=0.13, decay CI -0.165 to 0.019, the point estimate moving the wrong way for a decay). So there is no significant decay to be local or general. The treatment barely changed the model (accuracy flat), making this a bounded null, not a refutation; the cross-domain mismatch-flip design with paired tests is offered as the instrument for a stronger treatment.",
+ "weakest_part": "This is a bounded, weak-treatment null and I do not oversell it; the reviewer panel correctly caught that my first draft asserted in-domain identical-ness and OOD non-significance from marginal-CI overlap rather than a paired test, so I added McNemar and paired-bootstrap decay CIs, which confirm a clean null (MMLU p=0.87, ARC p=0.13, both decay CIs span zero) and also show the equal MMLU marginal hides 38 symmetric discordant items, so identical was the wrong word at the per-item level. Remaining real weaknesses: (1) the dominant fact is that the RL barely moved the model (flat accuracy), so there is simply no decay for the design to localize - this says nothing about strong RL. (2) The mismatch proxy can be inflated by answer-copying: a swapped CoT usually ends in a different stated answer, so a copy would register a flip without genuine reliance; an answer-masked control is the missing fix. (3) Near-chance MMLU accuracy means the in-domain proxy partly measures generic answer instability, not pure CoT-dependence, so the in-domain leg is the weakest and the cleaner ARC control is more trustworthy. (4) ARC and MMLU are both multiple-choice, so OOD here is a content shift under the same format, a mild form of distribution shift. (5) Small paired n (96 in-domain), one model and reward.",
+ "gate_report": {
+  "project_dir": "/home/ephra/projects/rl-monitor-ood",
+  "generated_at": "2026-06-24T21:54:37+00:00",
+  "checks": [
+   {
+    "name": "artifacts",
+    "status": "warn",
+    "detail": "required present; recommended absent: analysis_points.csv, analysis_tests.csv"
+   },
+   {
+    "name": "metric_consistency",
+    "status": "warn",
+    "detail": "[generic parser] all primary values traced; p/CI values not all found (papers round or omit them): ci_bound[0].ci=0.5729 not in paper.md; ci_bound[1].ci=0.7604 not in paper.md; ci_bound[2].ci=0.5729 not in paper.md; ci_bound[3].ci=0.7604 not in paper.md; ci_bound[4].ci=0.4747 not in paper.md; ci_bound[5].ci=0.6331 not in paper.md; ci_bound[7].ci=0.7089 not in paper.md; ci_bound[8].ci=0.1352 not in paper.md\u2026"
+   },
+   {
+    "name": "recompute",
+    "status": "pass",
+    "detail": "recompute.py output is identical to analysis_summary.txt (whitespace-normalized) \u2014 every number independently reproduced"
+   },
+   {
+    "name": "csv_traceability",
+    "status": "pass",
+    "detail": "12 metric(s) trace to 2 documented data file(s) with complete sidecars"
+   },
+   {
+    "name": "eval_order",
+    "status": "pass",
+    "detail": "eval_order present and filled in: eval_points.jsonl"
+   },
+   {
+    "name": "citations",
+    "status": "pass",
+    "detail": "16/16 eprints resolve, titles match"
+   },
+   {
+    "name": "reference_count",
+    "status": "pass",
+    "detail": "16 references (distinct keys cited in the draft and present in the bib)"
+   },
+   {
+    "name": "device_scrub",
+    "status": "pass",
+    "detail": "no fleet device names in paper.md/paper.tex"
+   },
+   {
+    "name": "figures",
+    "status": "pass",
+    "detail": "4 figures referenced in paper.md, all on disk with CSV + description sidecars"
+   },
+   {
+    "name": "tex_compiles",
+    "status": "skipped",
+    "detail": "no drafts/paper.tex"
+   },
+   {
+    "name": "style",
+    "status": "pass",
+    "detail": "no em dashes, double hyphens, or bullets"
+   }
+  ],
+  "overall": "pass",
+  "not_checked": [
+   "statistical methodology (test choice, assumptions, multiple comparisons)",
+   "claim/evidence fit \u2014 whether the prose claims more than the numbers support",
+   "novelty against the literature",
+   "code correctness beyond the recompute hook"
+  ]
+ },
+ "reviewer_panel": {
+  "project_dir": "/home/ephra/projects/rl-monitor-ood",
+  "draft": "drafts/paper.md",
+  "generated_at": "2026-06-24T21:52:37+00:00",
+  "cli": "claudius",
+  "model": "cli-default",
+  "prompt_version": "b8ba148a6536",
+  "advisory": true,
+  "passes": [
+   {
+    "lens": "design_validity",
+    "ok": true,
+    "overall_verdict": "Lean reject as written: the central proxy and the retention filter together make 'no decay' nearly unfalsifiable by construction, and the strongest supporting claim ('both models remain strongly CoT-dependent') is fully explained by answer-copying rather than monitorability. Most needs fixing: an answer-masked control and per-model retention accounting before any null can be believed.",
+    "n_findings": 4
+   },
+   {
+    "lens": "measurement",
+    "ok": true,
+    "overall_verdict": "Lean reject-unless-fixed: the paper's central inferences (no in-domain change, no significant OOD change, decay difference of 0.076) are all paired comparisons asserted from non-paired marginal CIs with no paired test and no CI on the decay itself; recompute the McNemar / paired-bootstrap CIs before any 'identical' or 'not significant' claim stands.",
+    "n_findings": 4
+   },
+   {
+    "lens": "claims",
+    "ok": true,
+    "overall_verdict": "Lean reject-unless-revised: the bounded-null is honestly framed, but the in-domain leg is oversold ('identical... exactly where it was', 'strongly CoT-dependent') on a metric that at near-chance MMLU accuracy cannot distinguish CoT-dependence from answer instability, and the significance claims are read off marginal CI overlap on paired data; condition the title and re-anchor the in-domain claims to a proper CoT-independent null.",
+    "n_findings": 4
+   }
+  ],
+  "findings": [
+   {
+    "lens": "design_validity",
+    "severity": "high",
+    "claim_attacked": "Both models remain strongly CoT-dependent, with mismatch flips far above their intact-CoT controls in both domains... The proxy is behaving sensibly, which is what lets us trust the null.",
+    "why": "The mismatch condition 'prefills a different item's chain of thought,' and a CoT for a different MMLU/ARC item ends in a different answer letter. Any instruction-following model that conditions on its prompt will tend to emit the letter embedded in the prefilled text, so a high mismatch-flip rate is the expected behavior of context-following, NOT evidence that the model's ORIGINAL answer faithfully depended on its OWN reasoning. The intact control re-presents the same CoT that already contains the same answer, so it cannot separate 'answer copying from injected text' from 'genuine reasoning dependence' \u2014 the entire mismatch-minus-intact gap the authors lean on is exactly what answer-copying predicts. This contaminates the only positive claim the paper salvages from the null and the sentence 'what lets us trust the null.'",
+    "suggested_fix": "Add a foreign-CoT control whose final answer token is masked/scrubbed (or that is drawn from items sharing the SAME correct answer letter). If mismatch flip collapses toward the intact rate once the embedded answer is removed, the proxy was measuring answer-copying, not monitorability; report the answer-masked flip rate as the real dependence estimate."
+   },
+   {
+    "lens": "design_validity",
+    "severity": "high",
+    "claim_attacked": "keeping items with a parseable answer and a non-empty chain of thought and pairing the two models on the intersection both retain (96 items for MMLU, 158 for ARC).",
+    "why": "The run sampled n_eval=250 (curve.csv.md Command), so the retention filter discards 250->96 (62%) of MMLU items and 250->158 (37%) of ARC items. Monitorability decay, if it occurs, plausibly manifests as degenerate, unparseable, or empty CoT \u2014 precisely the items this filter deletes. The design can therefore only observe decay among items where BOTH models still emit a clean parseable CoT+answer, i.e., it selects out exactly the population where the predicted damage would show. 'No decay' is consistent with the RL model dropping more items than base; the materials never report per-model retention counts, only the post-intersection n, so survivorship cannot be ruled out and the null is near-unfalsifiable as constructed.",
+    "suggested_fix": "Report base and RL retention counts separately per domain (parseable-answer rate, non-empty-CoT rate) before intersection. If RL retains fewer items, that delta IS the monitorability signal and must be folded into the decay metric (e.g., treat dropped-to-unparseable as a degenerate-CoT outcome) rather than silently excluded."
+   },
+   {
+    "lens": "measurement",
+    "severity": "high",
+    "claim_attacked": "on ARC the mismatch flip rate is 0.5570 for base (0.4747 to 0.6331) and 0.6329 for RL (0.5570 to 0.7089, n=158), an increase of 0.076 with heavily overlapping intervals, so it is not a decrease and not significant",
+    "why": "The data are paired (same 158 items scored under base and RL), but significance is read off the overlap of two independently-bootstrapped MARGINAL intervals. Overlapping marginals do not imply a non-significant paired difference; the correct test conditions on the discordant pairs. The +0.076 increase is a net of ~12 discordant flips out of 158 (RL 0.6329*158\u2248100 flips vs base 0.5570*158\u224888), and whether 12 net discordant pairs is significant depends entirely on the total discordant count (b+c), which is never reported. Worse, the derived statistic the whole 'local vs general' question rests on, decay_indomain_minus_ood=0.075949, carries NO confidence interval anywhere in curve.csv or the summary. The OOD 'statistically unchanged' claim and the headline cross-domain comparison are unsupported by any valid test.",
+    "suggested_fix": "Run McNemar's test (or a paired bootstrap over per-item base-minus-RL flip differences) on the ARC and MMLU pairs, report the discordant-pair counts (b, c), and report a CI on each decay value and on decay_indomain_minus_ood. State significance from that, not from marginal-CI overlap."
+   },
+   {
+    "lens": "measurement",
+    "severity": "high",
+    "claim_attacked": "On MMLU the mismatch flip rate is 0.6667 for both base and RL (95 percent CI 0.5729 to 0.7604, n=96), identical to four decimal places, so domain-specific RL left in-domain CoT-dependence exactly where it was.",
+    "why": "Identical marginal counts (64/96 each) do not establish item-level invariance, yet the prose escalates to 'exactly where it was.' The paper's own intact-control numbers refute the escalation: on the very same 96 MMLU items the base flips 20 (0.2083) and RL flips 15 (0.1562), so the two models demonstrably produce different per-item behavior on this proxy. The mismatch count matching at 64/96 is therefore a coincidence of marginals that can hide substantial offsetting churn (e.g. k items flip base-only and k flip RL-only, net zero). The identical reported CI (0.5729-0.7604 for both arms) confirms the analysis bootstrapped marginals independently rather than the paired difference, so it cannot see that churn.",
+    "suggested_fix": "Report the 2x2 discordant table for MMLU mismatch flips (base-flip/RL-noflip vs RL-flip/base-noflip). If discordant pairs are non-trivial, replace 'identical / exactly where it was' with 'identical in aggregate but with N item-level reversals,' and give the McNemar p on that table."
+   },
+   {
+    "lens": "claims",
+    "severity": "high",
+    "claim_attacked": "the mismatch flip rate is 0.6667 for both base and RL (95 percent CI 0.5729 to 0.7604, n=96), identical to four decimal places, so domain-specific RL left in-domain CoT-dependence exactly where it was",
+    "why": "This is the draft's crispest-sounding result, and the wording 'exactly where it was' claims an item-level invariance the data do not show. 0.6667 is the marginal mean (64/96 for both models); two models can flip on disjoint item sets and still match 64/64. Worse, MMLU accuracy is ALSO identical to four decimals (0.2917 = 0.2917, both 28/96), which is consistent with the RL checkpoint producing near-identical greedy outputs to base on these 96 items. If outputs are near-identical, the in-domain 'null' is vacuous (the same object measured twice), not a measurement that monitorability was preserved under an RL treatment. The per-example flips needed to tell these apart sit unused in eval_points.jsonl; the prose silently upgrades 'equal marginals' to 'unchanged property.'",
+    "suggested_fix": "Compute item-level agreement / McNemar on the 96 paired mismatch-flip indicators (base vs RL) from eval_points.jsonl, and report base-vs-RL greedy-output divergence on the MMLU items. If items churn under the equal marginal, or outputs are near-identical, replace 'left in-domain CoT-dependence exactly where it was' with the weaker, true statement (equal aggregate rate over a near-unchanged policy)."
+   },
+   {
+    "lens": "claims",
+    "severity": "high",
+    "claim_attacked": "Both models remain strongly CoT-dependent, with mismatch flips far above their intact-CoT controls in both domains... confirming that both models genuinely depend on the chain of thought",
+    "why": "In-domain this does not hold, and the draft's own numbers show why. MMLU accuracy is 0.2917, barely above 4-option chance (0.25), so on most items the model has no determinate answer; a 0.6667 mismatch flip on near-random answers is largely answer instability, not dependence on CoT content. The intact control proves the contamination: re-presenting the model's OWN CoT still flips 0.2083 of base answers under greedy decoding, i.e. roughly a fifth of the 'dependence' signal is pure instability, and intact is NOT the CoT-independent null (it still supplies the correct reasoning). The draft concedes 'the mismatch flip conflates genuine CoT-dependence with generic instability' in limitations, but the Results and Abstract still assert 'strongly CoT-dependent... in both domains' and 'genuinely depend on the chain of thought.' Since the paper explicitly says the proxy behaving sensibly 'is what lets us trust the null,' a broken in-domain proxy directly undercuts trust in the in-domain null, not just the rhetoric.",
+    "suggested_fix": "Benchmark mismatch flip against a CoT-independent null (answer-resampling rate given the empirical answer-letter distribution, or mismatch flip restricted to items the model answers correctly/high-confidence), using eval_points.jsonl. If in-domain mismatch flip is not clearly above that null, restrict 'strongly CoT-dependent' to ARC and state plainly that the MMLU proxy is uninformative at near-chance accuracy."
+   },
+   {
+    "lens": "design_validity",
+    "severity": "medium",
+    "claim_attacked": "On MMLU the mismatch flip rate is 0.6667 for both base and RL... identical to four decimal places, so domain-specific RL left in-domain CoT-dependence exactly where it was.",
+    "why": "0.6667 = 64/96 for both models, but marginal-rate equality does NOT imply per-item preservation: base and RL could flip on largely disjoint item sets and still both land at 64/96. The intact control already shows the generations differ (0.2083 vs 0.1562), so the models are not behaving identically item-by-item \u2014 making 'left it exactly where it was' an over-read of a coincidental marginal tie on small n. The per-example data needed to test this exists (eval_points.jsonl) but item-level agreement (McNemar / flip-set overlap) is never reported.",
+    "suggested_fix": "Compute base-vs-RL per-item flip agreement on the 96 paired MMLU items (McNemar test and Jaccard overlap of the flip sets). Report it; if overlap is low, replace 'exactly where it was' with the honest 'marginal rate unchanged, per-item structure shifted.'"
+   },
+   {
+    "lens": "design_validity",
+    "severity": "medium",
+    "claim_attacked": "Figure 2 shows the decay per domain directly: 0.000 in-domain and minus 0.076 out-of-domain.",
+    "why": "The two domains sit on incomparable instability floors (intact control 0.2083 MMLU vs 0.0570 ARC) and incomparable accuracy (0.29 vs 0.77), which the authors themselves flag as making MMLU mismatch flips 'conflate genuine CoT-dependence with generic instability.' Correcting for that floor (mismatch minus intact) flips the conclusion: in-domain net dependence is base 0.458 vs RL 0.511 (decay = -0.053, NOT zero), and OOD is base 0.500 vs RL 0.589 (decay = -0.089). The advertised 'zero in-domain' is an artifact of leaving the in-domain instability uncorrected; once corrected, in-domain decay is also negative and the local-vs-general contrast (0.076) shrinks and lies entirely within the MMLU control noise. Separately, curve.csv labels monitorability_decay_arc and decay_indomain_minus_ood as n=96 although ARC is n=158, and the cross-domain difference subtracts quantities from two disjoint item populations (96 vs 158) with no reported CI.",
+    "suggested_fix": "Report the instability-corrected dependence (mismatch minus intact) per cell and recompute decay on it; propagate the control's bootstrap variance into the decay CI; fix the n labels and either bootstrap the cross-domain difference under its true two-population variance or drop the point estimate '0.000 vs -0.076' as if comparable."
+   },
+   {
+    "lens": "measurement",
+    "severity": "medium",
+    "claim_attacked": "Both models remain strongly CoT-dependent, with mismatch flips far above their intact-CoT controls in both domains.",
+    "why": "In-domain this is contaminated by a floor/chance confound the hedge does not neutralize. MMLU accuracy is 0.2917 (28/96), essentially the four-option chance rate 0.25, and the intact control is 0.2083 (20/96) meaning one in five answers flips on merely re-presenting the model's OWN CoT. When answers are near-random, swapping in a foreign CoT mechanically changes the answer with high probability (~0.75 for a uniform 4-way guess) regardless of genuine CoT-dependence, so the observed mismatch 0.6667 is statistically indistinguishable from generic instability. The paper concedes this as limitation 3 but the abstract and conclusion still assert models 'remain strongly CoT-dependent' everywhere, including in-domain. The conceded instability does not just add noise; it removes the in-domain leg of the 'strongly CoT-dependent' claim entirely.",
+    "suggested_fix": "Compute a chance-corrected dependence measure (e.g. mismatch flip minus the flip rate expected under random answer reassignment given the model's answer-entropy, or mismatch minus intact as a paired per-item contrast with a CI). Restrict the 'strongly CoT-dependent' claim to ARC, where the control is near floor, and explicitly withdraw it for in-domain MMLU."
+   },
+   {
+    "lens": "claims",
+    "severity": "medium",
+    "claim_attacked": "an increase of 0.076 with heavily overlapping intervals, so it is not a decrease and not significant... so the decay is zero in-domain and negative out-of-domain",
+    "why": "The significance verdicts are inferred from overlap of the two marginal bootstrap CIs (base 0.4747-0.6331 vs RL 0.5570-0.7089), but the design is paired (same ARC items, base vs RL). Overlap of marginal CIs is not a valid test of a paired difference: it can both hide a real paired effect and manufacture a non-effect. The same error backs the in-domain 'identical/unchanged' significance reading. The draft even hands itself a directional conclusion ('the decay is... negative out-of-domain', Figure 2's -0.076) off a comparison it never tested correctly, while the per-item paired data to do it right are on disk.",
+    "suggested_fix": "Run McNemar (or a bootstrap over paired per-item flip differences) on the ARC and MMLU paired indicators in eval_points.jsonl and report that p-value. Then either keep 'not significant' if the paired test agrees, or correct it; drop the signed 'negative decay OOD' language unless the paired test licenses a direction."
+   },
+   {
+    "lens": "claims",
+    "severity": "medium",
+    "claim_attacked": "Title: 'Domain-Specific RL Leaves the Answer's CoT-Dependence Intact In-Domain and Out-of-Domain'",
+    "why": "The title states an unconditional, general property of domain-specific RL, but the paper's own conclusion is that 'the RL barely changed the model' and that the result 'says nothing about' the regime where outcome-only RL actually transforms reasoning. The abstract hedges ('bounded null at a weak treatment'); the title does not, and a reader citing only the title would take away the opposite of what is warranted: that RL is safe for monitorability. The contribution as titled rests entirely on the weakest fact in the paper (a treatment that did not move accuracy), framed as if it were evidence about RL in general.",
+    "suggested_fix": "Condition the title on the treatment actually delivered, e.g. 'An RL Run That Did Not Move the Policy Leaves CoT-Dependence Intact In- and Out-of-Domain' or '...Under a Weak Domain-Specific RL Treatment.' Make the title carry the same scope limit the discussion already concedes."
+   },
+   {
+    "lens": "measurement",
+    "severity": "low",
+    "claim_attacked": "ARC controls are 0.0570 (base) and 0.0443 (RL) with bootstrap CIs 0.0253-0.0949 and 0.0127-0.0759 (n=158); curve.csv: monitorability_decay_arc,-0.075949,96",
+    "why": "Two boundary/bookkeeping issues. (1) The ARC intact rates sit at the floor (~7-9 flips out of 158); 2000-resample percentile bootstrap intervals for a proportion this close to 0 are asymmetric and under-cover, so the near-0.05 control CIs are not trustworthy as stated. (2) curve.csv mislabels the n for monitorability_decay_arc and decay_indomain_minus_ood as 96 when the ARC pairing is n=158; the decay rows inherit the wrong denominator, a data-integrity slip that the recompute gate (which only checks arithmetic identity) would not catch.",
+    "suggested_fix": "For the near-floor control proportions use a Wilson or Clopper-Pearson interval rather than percentile bootstrap, and correct the n field on the ARC decay rows to 158 (or document why the decay row carries 96)."
+   }
+  ]
+ },
+ "not_checked": [
+  "a stronger RL treatment that demonstrably moves monitorability (the regime the question is really about)",
+  "an answer-masked corruption control to separate genuine CoT-dependence from answer-copying",
+  "a generative (non-multiple-choice) out-of-domain task, a larger distribution shift",
+  "larger models, other reward types, and more training steps",
+  "domains beyond MMLU and ARC, including non-QA task modalities"
+ ]
+}

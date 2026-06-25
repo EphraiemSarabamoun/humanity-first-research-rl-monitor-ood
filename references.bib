@@ -1,0 +1,111 @@
+@article{baker2025monitoring,
+  title={Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation},
+  author={Baker, Bowen and Huizinga, Joost and Gao, Leo and Dou, Zehao and Guan, Melody Y and Madry, Aleksander and Zaremba, Wojciech and Pachocki, Jakub and Farhi, David},
+  eprint={2503.11926}, archivePrefix={arXiv}, year={2025},
+  annote={Shows RL pressure can push reasoning models to obfuscate their chain of thought, degrading monitorability; the central concern our in-domain vs OOD test probes.}
+}
+
+@article{lanham2023measuring,
+  title={Measuring Faithfulness in Chain-of-Thought Reasoning},
+  author={Lanham, Tamera and Chen, Anna and Radhakrishnan, Ansh and Steiner, Benoit and Denison, Carson and Hernandez, Danny and Li, Dustin and Durmus, Esin and Hubinger, Evan and Kernion, Jackson and others},
+  eprint={2307.13702}, archivePrefix={arXiv}, year={2023},
+  annote={Corrupting / perturbing the CoT to test whether the answer depends on it; the basis for our mismatch-flip monitorability proxy.}
+}
+
+@article{turpin2023saywhat,
+  title={Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting},
+  author={Turpin, Miles and Michael, Julian and Perez, Ethan and Bowman, Samuel R},
+  eprint={2305.04388}, archivePrefix={arXiv}, year={2023},
+  annote={Stated reasoning can diverge from the true cause of the answer; the unfaithfulness that monitorability decay would worsen.}
+}
+
+@article{shao2024deepseekmath,
+  title={DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models},
+  author={Shao, Zhihong and Wang, Peiyi and Zhu, Qihao and Xu, Runxin and Song, Junxiao and Bi, Xiao and Zhang, Haowei and Zhang, Mingchuan and Li, YK and Wu, Y and others},
+  eprint={2402.03300}, archivePrefix={arXiv}, year={2024},
+  annote={Introduces GRPO, the outcome-only RL algorithm whose monitorability effect we test in and out of domain.}
+}
+
+@article{guo2025deepseekr1,
+  title={DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning},
+  author={Guo, Daya and Yang, Dejian and Zhang, Haowei and Song, Junxiao and Zhang, Ruoyu and Xu, Runxin and Zhu, Qihao and Ma, Shirong and Wang, Peiyi and Bi, Xiao and others},
+  eprint={2501.12948}, archivePrefix={arXiv}, year={2025},
+  annote={Large-scale outcome-only RL that reshapes the chain of thought; the regime where monitorability decay is most plausible and our weak treatment is not.}
+}
+
+@article{ouyang2022instructgpt,
+  title={Training language models to follow instructions with human feedback},
+  author={Ouyang, Long and Wu, Jeffrey and Jiang, Xu and Almeida, Diogo and Wainwright, Carroll and Mishkin, Pamela and Zhang, Chong and Agarwal, Sandhini and Slama, Katarina and Ray, Alex and others},
+  eprint={2203.02155}, archivePrefix={arXiv}, year={2022},
+  annote={The canonical outcome-reward post-training pipeline; the family of methods whose monitorability side effects matter.}
+}
+
+@article{bai2022hh,
+  title={Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback},
+  author={Bai, Yuntao and Jones, Andy and Ndousse, Kamal and Askell, Amanda and Chen, Anna and DasSarma, Nova and Drain, Dawn and Fort, Stanislav and Ganguli, Deep and Henighan, Tom and others},
+  eprint={2204.05862}, archivePrefix={arXiv}, year={2022},
+  annote={Establishes RLHF as standard post-training; context for domain-specific RL and its generalization.}
+}
+
+@article{rafailov2023dpo,
+  title={Direct Preference Optimization: Your Language Model is Secretly a Reward Model},
+  author={Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and Ermon, Stefano and Manning, Christopher D and Finn, Chelsea},
+  eprint={2305.18290}, archivePrefix={arXiv}, year={2023},
+  annote={A widely used outcome-level optimizer in the same family whose effects could in principle transfer across domains.}
+}
+
+@article{wei2022cot,
+  title={Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
+  author={Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and Bosma, Maarten and Ichter, Brian and Xia, Fei and Chi, Ed and Le, Quoc and Zhou, Denny},
+  eprint={2201.11903}, archivePrefix={arXiv}, year={2022},
+  annote={Defines chain-of-thought reasoning, the object whose monitorability we measure.}
+}
+
+@article{kojima2022zeroshot,
+  title={Large Language Models are Zero-Shot Reasoners},
+  author={Kojima, Takeshi and Gu, Shixiang Shane and Reid, Machel and Matsuo, Yutaka and Iwasawa, Yusuke},
+  eprint={2205.11916}, archivePrefix={arXiv}, year={2022},
+  annote={Simple prompts elicit reasoning traces across tasks; supports eliciting comparable CoTs on both MMLU and ARC.}
+}
+
+@article{lightman2023letsverify,
+  title={Let's Verify Step by Step},
+  author={Lightman, Hunter and Kosaraju, Vineet and Burda, Yura and Edwards, Harri and Baker, Bowen and Lee, Teddy and Leike, Jan and Schulman, John and Sutskever, Ilya and Cobbe, Karl},
+  eprint={2305.20050}, archivePrefix={arXiv}, year={2023},
+  annote={Process versus outcome supervision; the contrast that makes outcome-RL monitorability decay a concern.}
+}
+
+@article{lyu2023faithfulcot,
+  title={Faithful Chain-of-Thought Reasoning},
+  author={Lyu, Qing and Havaldar, Shreya and Stein, Adam and Zhang, Li and Rao, Delip and Wong, Eric and Apidianaki, Marianna and Callison-Burch, Chris},
+  eprint={2301.13379}, archivePrefix={arXiv}, year={2023},
+  annote={Defines reasoning whose answer provably follows from the steps; the faithfulness ideal monitorability tracks.}
+}
+
+@article{cobbe2021gsm8k,
+  title={Training Verifiers to Solve Math Word Problems},
+  author={Cobbe, Karl and Kosaraju, Vineet and Bavarian, Mohammad and Chen, Mark and Jun, Heewoo and Kaiser, Lukasz and Plappert, Matthias and Tworek, Jerry and Hilton, Jacob and Nakano, Reiichiro and others},
+  eprint={2110.14168}, archivePrefix={arXiv}, year={2021},
+  annote={Verifiable-answer reward, the signal style our GRPO uses.}
+}
+
+@article{hendrycks2021mmlu,
+  title={Measuring Massive Multitask Language Understanding},
+  author={Hendrycks, Dan and Burns, Collin and Basart, Steven and Zou, Andy and Mazeika, Mantas and Song, Dawn and Steinhardt, Jacob},
+  eprint={2009.03300}, archivePrefix={arXiv}, year={2020},
+  annote={MMLU, our in-domain training and evaluation benchmark.}
+}
+
+@article{clark2018arc,
+  title={Think you have Solved Question Answering? Try ARC, the AI2 Reasoning Challenge},
+  author={Clark, Peter and Cowhey, Isaac and Etzioni, Oren and Khot, Tushar and Sabharwal, Ashish and Schoenick, Carissa and Tafjord, Oyvind},
+  eprint={1803.05457}, archivePrefix={arXiv}, year={2018},
+  annote={ARC-Challenge, our out-of-domain evaluation benchmark.}
+}
+
+@article{qwen2024report,
+  title={Qwen2.5 Technical Report},
+  author={Yang, An and Yang, Baosong and Zhang, Beichen and Hui, Binyuan and Zheng, Bo and Yu, Bowen and Li, Chengyuan and Liu, Dayiheng and Huang, Fei and Wei, Haoran and others},
+  eprint={2412.15115}, archivePrefix={arXiv}, year={2024},
+  annote={Model card for Qwen2.5-1.5B-Instruct, the base model.}
+}

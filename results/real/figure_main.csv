@@ -1,0 +1,5 @@
+metric,value,n
+base_mmlu_mismatch_flip,0.666667,96
+rl_mmlu_mismatch_flip,0.666667,96
+base_arc_mismatch_flip,0.556962,158
+rl_arc_mismatch_flip,0.632911,158

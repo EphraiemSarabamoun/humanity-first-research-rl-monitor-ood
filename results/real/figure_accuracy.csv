@@ -1,0 +1,5 @@
+metric,value,n
+base_mmlu_acc,0.291667,96
+rl_mmlu_acc,0.291667,96
+base_arc_acc,0.772152,158
+rl_arc_acc,0.759494,158

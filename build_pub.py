@@ -1,0 +1,20 @@
+import json
+from pathlib import Path
+R = Path("results/real")
+gate = json.load(open(R/"gate_report.json")); panel = json.load(open(R/"reviewer_panel.json")); cost = json.load(open(R/"cost_report.json"))
+p = {
+ "plain": "A safety worry is that training an AI with reinforcement learning makes its written reasoning a worse guide to its real answer, so that reading the reasoning no longer catches problems. If RL on one subject causes that, does the damage stay in that subject or spread to others? We trained a small model with RL on one multiple-choice subject area and measured, on both that area and a different one, how much the answer still depends on the written reasoning (we scramble the reasoning and see if the answer changes). We found no meaningful change either way: in the trained area the dependence was statistically unchanged, and in the new area it was unchanged or slightly higher, not lower. So there was no decay to be local or to spread. The catch is the RL run was weak and barely changed the model, so this does not settle the question for strong RL. Approve publishes it as an honest negative and methods result; Reject shelves it.",
+ "cost": {"api_equivalent_usd": cost.get("api_equivalent_usd"), "sessions": cost.get("sessions")},
+ "paper_title": "No Significant CoT-Monitorability Decay to Localize: Domain-Specific RL Shows No Significant Change in CoT-Dependence In-Domain or Out-of-Domain",
+ "headline_claim": "On Qwen2.5-1.5B-Instruct after outcome-only GRPO trained on MMLU, the self-CoT mismatch-flip monitorability proxy showed no significant base-vs-RL change in either domain by paired tests: MMLU net rate identical at 0.6667 (McNemar p=0.87, paired decay CI -0.125 to 0.125), ARC 0.557 to 0.633 (McNemar p=0.13, decay CI -0.165 to 0.019, the point estimate moving the wrong way for a decay). So there is no significant decay to be local or general. The treatment barely changed the model (accuracy flat), making this a bounded null, not a refutation; the cross-domain mismatch-flip design with paired tests is offered as the instrument for a stronger treatment.",
+ "weakest_part": "This is a bounded, weak-treatment null and I do not oversell it; the reviewer panel correctly caught that my first draft asserted in-domain identical-ness and OOD non-significance from marginal-CI overlap rather than a paired test, so I added McNemar and paired-bootstrap decay CIs, which confirm a clean null (MMLU p=0.87, ARC p=0.13, both decay CIs span zero) and also show the equal MMLU marginal hides 38 symmetric discordant items, so identical was the wrong word at the per-item level. Remaining real weaknesses: (1) the dominant fact is that the RL barely moved the model (flat accuracy), so there is simply no decay for the design to localize - this says nothing about strong RL. (2) The mismatch proxy can be inflated by answer-copying: a swapped CoT usually ends in a different stated answer, so a copy would register a flip without genuine reliance; an answer-masked control is the missing fix. (3) Near-chance MMLU accuracy means the in-domain proxy partly measures generic answer instability, not pure CoT-dependence, so the in-domain leg is the weakest and the cleaner ARC control is more trustworthy. (4) ARC and MMLU are both multiple-choice, so OOD here is a content shift under the same format, a mild form of distribution shift. (5) Small paired n (96 in-domain), one model and reward.",
+ "gate_report": gate, "reviewer_panel": panel,
+ "not_checked": [
+   "a stronger RL treatment that demonstrably moves monitorability (the regime the question is really about)",
+   "an answer-masked corruption control to separate genuine CoT-dependence from answer-copying",
+   "a generative (non-multiple-choice) out-of-domain task, a larger distribution shift",
+   "larger models, other reward types, and more training steps",
+   "domains beyond MMLU and ARC, including non-QA task modalities"]
+}
+open(R/"pub.json", "w").write(json.dumps(p, indent=1))
+print("pub.json bytes", len(json.dumps(p)), "cost", p["cost"]["api_equivalent_usd"])

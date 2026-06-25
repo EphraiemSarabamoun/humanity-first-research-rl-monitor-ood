@@ -1,0 +1,4 @@
+metric,value,n
+monitorability_decay_mmlu,0.000000,96
+monitorability_decay_arc,-0.075949,96
+decay_indomain_minus_ood,0.075949,96
